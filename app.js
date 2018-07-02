@@ -8,7 +8,7 @@ var sassMiddleware = require('node-sass-middleware');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var foodsRouter = require('./routes/api/v1/foods');
-
+var cors = require('cors');
 var app = express();
 
 // view engine setup
@@ -31,6 +31,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/v1/foods', foodsRouter);
 
+// enables CORS
+app.use(cors());
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
