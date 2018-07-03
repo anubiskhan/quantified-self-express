@@ -6,7 +6,8 @@ class Meal {
 
   static all() {
     return database("meals")
-    .select("*");
+    .select("*")
+    .map(this.foodList);
   };
 
   static find(req) {
