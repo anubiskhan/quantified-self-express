@@ -9,9 +9,9 @@ router.get("/", mealsController.index)
 router.get("/:id/foods", mealsController.show)
 
 // // POST to meal to add food
-router.post("/:id/foods", mealsController.update)
+// router.post("/:id/foods", mealsController.update)
 
 // // DELETE an existing food from a meal
-router.delete("/:id/foods", mealsController.show)
+// router.delete("/:id/foods", mealsController.show)
 
 module.exports = router;
