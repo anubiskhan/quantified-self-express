@@ -11,20 +11,23 @@ In order to consume the API, take the following steps:
   ```
   and head into the directory
   ```
-  cd quantified-self-rails/
+  cd quantified-self-express/
   ```
-  2. Run the following on your command line in order to make sure that you'll have all of the necessary gems
+  2. Run the following on your command line in order to make sure that you'll have all of the necessary packages
   ```
-  bundle install
+  npm install
+  npm install knex -g
+  npm install nodemon -g
   ```
 
   3. In order to get the database established and seeded run the following on your command line
   ```
-  rails db:{create,migrate,seed}
+  knex migrate:latest
+  knex seed:run
   ```
   4. Initialize the server by running the following on your command line
   ```
-  rails s
+  nodemon bin/www
   ```
 
 ### Endpoints
