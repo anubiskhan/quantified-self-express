@@ -49,7 +49,7 @@ router.post("/", function(req, res, next) {
 });
 
 // PATCH an existing food
-router.patch("/:id", function(req, res, next) {
+router.put("/:id", function(req, res, next) {
   database("foods")
   .where("id", req.params.id)
   .update({
