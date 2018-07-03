@@ -1,4 +1,4 @@
-# Quantified Self (Rails)
+# Quantified Self (Express)
   This application is an API designed to handle the backend processes of a frontend 'meal and food manager' called [Quantified Self Front End](https://anubiskhan.github.io/quantified-self-fe-express/). The frontend is deployed via [GitHub Pages](https://anubiskhan.github.io/quantified-self-fe-express/), while the backend is hosted on an instance of Heroku. MY [Heroku App](https://radiant-scrubland-30997.herokuapp.com/) instance.
 
   It is essentially a collection of endpoints that provide CRUD functionality for Food, and psuedo-CRUD functionality for Meals. (An end user cannot create or destroy meals, but is able to create associations between pre-seeded meals and foods).
