@@ -1,21 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const mealsController = require("../../../controllers/mealsController.js");
+const mealfoodsController = require("../../../controllers/mealfoodsController.js");
 
 // GET all meals
 router.get("/", mealsController.index)
 
-// // GET single food by id
-// router.get("/:id", foodsController.show)
-//
-// // POST a new food
-// router.post("/", foodsController.create)
-//
-// // PATCH || PUT to update an existing food
-// router.patch("/:id", foodsController.update)
-// router.put("/:id", foodsController.update)
-//
-// // DELETE an existing food
-// router.delete("/:id", foodsController.delete)
+// GET foods for a meal by meal id
+router.get("/:id/foods", mealsController.show)
+
+// // POST to meal to add food
+router.post("/:id/foods", mealfoodsController.create)
+
+// // DELETE an existing food from a meal
+router.delete("/:id/foods", mealfoodsController.delete)
 
 module.exports = router;

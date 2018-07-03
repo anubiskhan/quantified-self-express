@@ -15,6 +15,17 @@ class mealsController {
     });
   }
 
+  static show(req, res, next) {
+    Meal.find(req)
+    .then(meals => {
+      if (!meals) {
+        return res.sendStatus(404).json({"message": "Unable to find the meal"});
+      } else {
+        return res.status(200).json(meals);
+      }
+    });
+  }
+
 }
 
 module.exports = mealsController;
