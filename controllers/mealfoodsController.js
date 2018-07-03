@@ -17,6 +17,19 @@ class mealfoodsController {
     });
   }
 
+  static delete(req, res, next) {
+    Mealfood.delete(req)
+    .then(meals => {
+      if (!meals) {
+        return res.sendStatus(404).json({"message": "Unable to delete food to meal"});
+      } else {
+        return res.json({
+          "message": "Successfully removed FOODNAME to MEALNAME"
+        });
+      }
+    });
+  }
+
 }
 
 module.exports = mealfoodsController;

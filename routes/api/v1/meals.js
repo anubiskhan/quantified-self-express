@@ -13,6 +13,6 @@ router.get("/:id/foods", mealsController.show)
 router.post("/:id/foods", mealfoodsController.create)
 
 // // DELETE an existing food from a meal
-// router.delete("/:id/foods", mealfoodsController.show)
+router.delete("/:id/foods", mealfoodsController.delete)
 
 module.exports = router;

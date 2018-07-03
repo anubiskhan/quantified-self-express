@@ -13,6 +13,17 @@ class Mealfood {
       .returning("*")
   };
 
+  static delete(req) {
+    return database("mealfoods")
+      .where({
+        meal_id: `${req.params.id}`
+      })
+      .andWhere({
+        food_id: `${req.body.food.id}`
+      })
+      .del()
+  };
+
 };
 
 module.exports = Mealfood;
