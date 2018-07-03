@@ -7,22 +7,26 @@ const database = require("knex")(configuration);
 
 // GET all foods
 router.get("/", function(req, res, next) {
-  database.raw("SELECT * FROM foods").then(foods => {
-    if (!foods.rows) {
+  database("foods")
+  .select("*")
+  .then(foods => {
+    if (!foods) {
       return res.sendStatus(404);
     } else {
-      return res.status(200).json(foods.rows);
+      return res.status(200).json(foods);
     }
   });
 });
 
 // GET single food by id
 router.get("/:id", function(req, res, next) {
-  database.raw("SELECT * FROM foods WHERE id=?", req.params.id).then(food => {
-    if (food.rows.empty) {
+  database("foods")
+  .where("id", req.params.id)
+  .then(food => {
+    if (food.empty) {
       return res.sendStatus(404);
     } else {
-      return res.status(200).json(food.rows);
+      return res.status(200).json(food);
     }
   });
 });
@@ -35,13 +39,9 @@ router.post("/", function(req, res, next) {
       calories: `${req.body.food.calories}`
     })
     .returning(["id", "name", "calories"])
-    // database.raw(
-    //   "INSERT INTO foods (name, calories) VALUES (?, ?) RETURNING *",
-    //   [req.body.food.name, req.body.food.calories]
-    // )
     .then(food => {
       if (food.empty) {
-        return res.sendStatus(404);
+        return res.sendStatus(400);
       } else {
         return res.status(200).json(food);
       }
@@ -49,22 +49,31 @@ router.post("/", function(req, res, next) {
 });
 
 // PATCH an existing food
-router.patch("/", function(req, res, next) {
-  database
-    .raw(
-      "UPDATE foods SET (name, calories) VALUES (?, ?) WHERE id = ? RETURNING *",
-      // "UPDATE foods (name, calories) VALUES (?, ?) where id=? RETURNING *",
-      [req.body.food.name, req.body.food.calories, req.params.id]
-    )
-    .then(food => {
-      if (food.empty) {
-        return res.sendStatus(404);
-      } else {
-        return res.status(200).json(food.rows);
-      }
-    });
+router.patch("/:id", function(req, res, next) {
+  database("foods")
+  .where("id", req.params.id)
+  .update({
+    name: `${req.body.food.name}`,
+    calories: `${req.body.food.calories}`
+  })
+  .returning(["id", "name", "calories"])
+  .then(food => {
+    if (food.empty) {
+      return res.sendStatus(404);
+    } else {
+      return res.status(204).json(food);
+    }
+  });
 });
 
 // DELETE an existing food
+router.delete("/:id", function(req, res, next) {
+  database("foods")
+  .where("id", req.params.id)
+  .del()
+  .then(food => {
+    return res.status(204);
+  });
+});
 
 module.exports = router;
