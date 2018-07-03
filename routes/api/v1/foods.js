@@ -1,79 +1,21 @@
 const express = require("express");
 const router = express.Router();
-
-const environment = process.env.NODE_ENV || "development";
-const configuration = require("../../../knexfile")[environment];
-const database = require("knex")(configuration);
+const foodsController = require("../../../controllers/foodsController.js");
 
 // GET all foods
-router.get("/", function(req, res, next) {
-  database("foods")
-  .select("*")
-  .then(foods => {
-    if (!foods) {
-      return res.sendStatus(404);
-    } else {
-      return res.status(200).json(foods);
-    }
-  });
-});
+router.get("/", foodsController.index)
 
 // GET single food by id
-router.get("/:id", function(req, res, next) {
-  database("foods")
-  .where("id", req.params.id)
-  .then(food => {
-    if (food.empty) {
-      return res.sendStatus(404);
-    } else {
-      return res.status(200).json(food);
-    }
-  });
-});
+router.get("/:id", foodsController.show)
 
 // POST a new food
-router.post("/", function(req, res, next) {
-  database("foods")
-    .insert({
-      name: `${req.body.food.name}`,
-      calories: `${req.body.food.calories}`
-    })
-    .returning(["id", "name", "calories"])
-    .then(food => {
-      if (food.empty) {
-        return res.sendStatus(400);
-      } else {
-        return res.status(200).json(food);
-      }
-    });
-});
+router.post("/", foodsController.create)
 
-// PATCH an existing food
-router.put("/:id", function(req, res, next) {
-  database("foods")
-  .where("id", req.params.id)
-  .update({
-    name: `${req.body.food.name}`,
-    calories: `${req.body.food.calories}`
-  })
-  .returning(["id", "name", "calories"])
-  .then(food => {
-    if (food.empty) {
-      return res.sendStatus(404);
-    } else {
-      return res.status(204).json(food);
-    }
-  });
-});
+// PATCH || PUT to update an existing food
+router.patch("/:id", foodsController.update)
+router.put("/:id", foodsController.update)
 
 // DELETE an existing food
-router.delete("/:id", function(req, res, next) {
-  database("foods")
-  .where("id", req.params.id)
-  .del()
-  .then(food => {
-    return res.status(204);
-  });
-});
+router.delete("/:id", foodsController.delete)
 
 module.exports = router;
