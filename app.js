@@ -6,7 +6,7 @@ var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 var cors = require('cors');
 var app = express();
-
+app.options('*', cors())
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var foodsRouter = require('./routes/api/v1/foods');
