@@ -19,7 +19,7 @@ class Mealfood {
         meal_id: `${req.params.id}`
       })
       .andWhere({
-        food_id: `${req.body.food.id}`
+        food_id: `${req.params.food_id}`
       })
       .del()
   };
