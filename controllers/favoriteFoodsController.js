@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Favoritefood = require("../models/favoriteFood.js");
 
-class favoriteFoodsController {
 
+class favoriteFoodsController {
   static index(req, res, next) {
-    Favoritefood.all()
+    return Favoritefood.all()
       .then(favs => {
-        return res.status(200).json(favs);
+        return res.status(200).json(favs.rows);
       });
     }
 }
