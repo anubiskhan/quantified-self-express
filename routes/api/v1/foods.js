@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const foodsController = require("../../../controllers/foodsController.js");
-
+const recipesController = require("../../../controllers/recipesController.js");
 // GET all foods
 router.get("/", foodsController.index)
 
