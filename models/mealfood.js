@@ -8,9 +8,9 @@ class Mealfood {
     return database("mealfoods")
       .insert({
         meal_id: `${req.params.id}`,
-        food_id: `${req.body.food.id}`
+        food_id: `${req.params.food_id}`
       })
-      .returning("*")
+      .returning(["id", "food_id"])
   };
 
   static delete(req) {
