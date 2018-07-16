@@ -18,4 +18,7 @@ router.put("/:id", foodsController.update)
 // DELETE an existing food
 router.delete("/:id", foodsController.delete)
 
+// GET recipes for a food
+router.get("/:id/recipes", recipesController.show)
+
 module.exports = router;
