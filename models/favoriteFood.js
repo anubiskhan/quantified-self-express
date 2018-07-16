@@ -5,18 +5,26 @@ const database = require("knex")(configuration);
 class Favoritefood {
   static all() {
     return database.raw(
-      `SELECT timesEaten, json_agg(json_build_object('name', name, 'calories', calories)) AS foods
-       FROM
-       (
-         SELECT foods.name, foods.calories, COUNT(foods.id) AS timesEaten
-         FROM foods
-         LEFT JOIN mealfoods ON foods.id = mealfoods.food_id
-         GROUP BY foods.id
-         ORDER BY timesEaten DESC
-       ) joinsQuery
-       GROUP BY timesEaten
-       ORDER BY timesEaten DESC`
-    )
+
+      `SELECT
+      T.timesEaten,
+        json_agg(json_build_object('name',
+        t.foodName, 'calories', t.calories, 'mealsWhenEaten', meals))
+      AS foods
+      FROM (
+        SELECT
+          foods.id as foodId,
+          foods.name as foodName,
+          foods.calories as calories,
+          count(foods.id) as timesEaten,
+          array_agg(DISTINCT meals.name) AS meals
+        FROM foods, mealfoods, meals
+        WHERE mealfoods.food_id = foods.id
+        GROUP BY foodId
+        ) as T
+      GROUP BY timesEaten
+      ORDER BY timesEaten DESC`
+    );
   }
 }
 module.exports = Favoritefood;
