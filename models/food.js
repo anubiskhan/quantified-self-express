@@ -11,7 +11,8 @@ class Food {
 
   static find(req) {
     return database("foods")
-    .where("id", req.params.id);
+    .where("id", req.params.id)
+    .first();
   };
 
   static create(req) {
@@ -21,6 +22,10 @@ class Food {
         calories: `${req.body.food.calories}`
       })
       .returning("*")
+      .limit(1)
+      .then(foods => {
+        return foods[0];
+      });
   };
 
   static update(req) {
@@ -31,6 +36,10 @@ class Food {
       calories: `${req.body.food.calories}`
     })
     .returning("*")
+    .limit(1)
+    .then(foods => {
+      return foods[0];
+    });
   };
 
   static delete(req) {

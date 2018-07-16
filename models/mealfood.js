@@ -7,16 +7,16 @@ class Mealfood {
   static add(req) {
     return database("mealfoods")
       .insert({
-        meal_id: `${req.params.id}`,
-        food_id: `${req.body.food.id}`
+        meal_id: `${req.params.meal_id}`,
+        food_id: `${req.params.food_id}`
       })
-      .returning("*")
+      .returning(["meal_id", "food_id"])
   };
 
   static delete(req) {
     return database("mealfoods")
       .where({
-        meal_id: `${req.params.id}`
+        meal_id: `${req.params.meal_id}`
       })
       .andWhere({
         food_id: `${req.params.food_id}`
