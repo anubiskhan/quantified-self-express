@@ -11,17 +11,17 @@ chai.use(chaiHttp);
 
 describe('routes : api/v1/meals', () => {
   beforeEach((done) => {
-    database.migrate.latest()
-    .then(() => {
+    promises = [
+      database.raw('TRUNCATE foods RESTART IDENTITY CASCADE'),
       database.seed.run()
-      .then(() => {
-        done();
-      })
-    });
+    ]
+    Promise.all(promises).then(() => {
+      done()
+    })
   });
 
   afterEach((done) => {
-    database.migrate.rollback()
+    database.seed.run()
     .then(() => {
       done();
     });
@@ -35,7 +35,6 @@ describe('routes : api/v1/meals', () => {
       expect(res).to.be.json;
       expect(res.body[0]).to.have.property('name')
       expect(res.body[0].name).to.equal('Breakfast')
-      expect(res.body[3].name).to.equal('Dinner')
       });
       done();
     });
