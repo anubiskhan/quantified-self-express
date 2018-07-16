@@ -11,17 +11,17 @@ chai.use(chaiHttp);
 
 describe('routes : api/v1/foods', () => {
   beforeEach((done) => {
-    database.migrate.latest()
-    .then(() => {
+    promises = [
+      database.raw('TRUNCATE foods RESTART IDENTITY CASCADE'),
       database.seed.run()
-      .then(() => {
-        done();
-      })
-    });
+    ]
+    Promise.all(promises).then(() => {
+      done()
+    })
   });
 
   afterEach((done) => {
-    database.migrate.rollback()
+    database.seed.run()
     .then(() => {
       done();
     });
