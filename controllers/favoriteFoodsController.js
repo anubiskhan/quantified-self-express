@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const favoriteFood = require("../models/favoriteFood.js");
+const Favoritefood = require("../models/favoriteFood.js");
 
 class favoriteFoodsController {
 
