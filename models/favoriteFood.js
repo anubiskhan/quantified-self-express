@@ -9,7 +9,7 @@ class Favoritefood {
       `SELECT
       T.timesEaten,
         json_agg(json_build_object('name',
-        t.foodName, 'calories', t.calories))
+        t.foodName, 'calories', t.calories, 'mealsWhenEaten', meals))
       AS foods
       FROM (
         SELECT
@@ -17,8 +17,8 @@ class Favoritefood {
           foods.name as foodName,
           foods.calories as calories,
           count(foods.id) as timesEaten,
-        SUM(foods.calories) as totalCalories
-        FROM foods, mealfoods
+          array_agg(DISTINCT meals.name) AS meals
+        FROM foods, mealfoods, meals
         WHERE mealfoods.food_id = foods.id
         GROUP BY foodId
         ) as T
