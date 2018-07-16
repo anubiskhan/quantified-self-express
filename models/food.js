@@ -21,7 +21,11 @@ class Food {
         name: `${req.body.food.name}`,
         calories: `${req.body.food.calories}`
       })
-      .returning("*");
+      .returning("*")
+      .limit(1)
+      .then(foods => {
+        return foods[0];
+      });
   };
 
   static update(req) {
@@ -32,6 +36,10 @@ class Food {
       calories: `${req.body.food.calories}`
     })
     .returning("*")
+    .limit(1)
+    .then(foods => {
+      return foods[0];
+    });
   };
 
   static delete(req) {

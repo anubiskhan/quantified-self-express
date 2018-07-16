@@ -54,7 +54,7 @@ class foodsController {
       if (food.empty) {
         return res.sendStatus(404).json({"message": "Food has NOT been deleted"});
       } else {
-        return res.status(200).json({"message": "Food has been deleted"});
+        return res.status(204).json({"message": "Food has been deleted"});
       }
     });
   }
