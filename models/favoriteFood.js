@@ -18,7 +18,9 @@ class Favoritefood {
           foods.calories as calories,
           count(foods.id) as timesEaten,
           array_agg(DISTINCT meals.name) AS meals
-        FROM foods, mealfoods, meals
+        FROM foods
+        JOIN mealfoods ON foods.id = mealfoods.food_id
+        JOIN meals ON meals.id = mealfoods.meal_id
         WHERE mealfoods.food_id = foods.id
         GROUP BY foodId
         ) as T
